@@ -9,5 +9,6 @@ public interface PlanHdrMapper {
     PlanHdr selectPlanHdr(String planNo);
     int insertPlanHdr(PlanHdr planHdr);
     int updatePlanHdr(PlanHdr planHdr);
+    int updatePlanHdrStatus(PlanHdr planHdr);
     int deletePlanHdr(String planNo);
 }

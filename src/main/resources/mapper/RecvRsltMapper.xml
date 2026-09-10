@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wms.mini.mapper.RecvRsltMapper">
+
+    <select id="selectRecvRsltListByPlanNo" parameterType="string" resultType="com.wms.mini.domain.RecvRslt">
+        SELECT r.RECV_NO, r.PLAN_NO, r.ITEM_CD, r.ACTUAL_QTY, r.INSPECT_RESULT, i.ITEM_NM
+        FROM RECV_RSLT r
+                 JOIN ITEM_MST i ON r.ITEM_CD = i.ITEM_CD
+        WHERE r.PLAN_NO = #{planNo}
+    </select>
+
+    <insert id="insertRecvRslt" parameterType="com.wms.mini.domain.RecvRslt">
+        INSERT INTO RECV_RSLT (RECV_NO, PLAN_NO, ITEM_CD, ACTUAL_QTY, INSPECT_RESULT)
+        VALUES (#{recvNo}, #{planNo}, #{itemCd}, #{actualQty}, #{inspectResult})
+    </insert>
+
+</mapper>

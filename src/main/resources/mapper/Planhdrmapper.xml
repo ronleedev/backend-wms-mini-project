@@ -31,6 +31,12 @@
         WHERE PLAN_NO = #{planNo}
     </update>
 
+    <update id="updatePlanHdrStatus" parameterType="com.wms.mini.domain.PlanHdr">
+        UPDATE PLAN_HDR
+        SET STATUS = #{status}
+        WHERE PLAN_NO = #{planNo}
+    </update>
+
     <delete id="deletePlanHdr" parameterType="string">
         DELETE FROM PLAN_HDR WHERE PLAN_NO = #{planNo}
     </delete>

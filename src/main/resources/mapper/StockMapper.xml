@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wms.mini.mapper.StockMapper">
+
+    <select id="selectStockList" resultType="com.wms.mini.domain.Stock">
+        SELECT s.WH_CD, s.ITEM_CD, s.LOC_CD, s.QTY, i.ITEM_NM, w.WH_NM
+        FROM STOCK s
+                 JOIN ITEM_MST i ON s.ITEM_CD = i.ITEM_CD
+                 JOIN WAREHOUSE w ON s.WH_CD = w.WH_CD
+        ORDER BY s.WH_CD, s.ITEM_CD, s.LOC_CD
+    </select>
+
+    <!-- 같은 창고+품목+로케이션 조합이면 수량 누적, 없으면 신규 생성 -->
+    <insert id="upsertStock" parameterType="com.wms.mini.domain.Stock">
+        INSERT INTO STOCK (WH_CD, ITEM_CD, LOC_CD, QTY)
+        VALUES (#{whCd}, #{itemCd}, #{locCd}, #{qty})
+            ON DUPLICATE KEY UPDATE QTY = QTY + VALUES(QTY)
+    </insert>
+
+</mapper>
