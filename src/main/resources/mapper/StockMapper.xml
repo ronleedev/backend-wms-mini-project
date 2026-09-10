@@ -17,4 +17,16 @@
             ON DUPLICATE KEY UPDATE QTY = QTY + VALUES(QTY)
     </insert>
 
+    <select id="selectStock" resultType="com.wms.mini.domain.Stock">
+        SELECT WH_CD, ITEM_CD, LOC_CD, QTY
+        FROM STOCK
+        WHERE WH_CD = #{whCd} AND ITEM_CD = #{itemCd} AND LOC_CD = #{locCd}
+    </select>
+
+    <update id="decreaseStock" parameterType="com.wms.mini.domain.Stock">
+        UPDATE STOCK
+        SET QTY = QTY - #{qty}
+        WHERE WH_CD = #{whCd} AND ITEM_CD = #{itemCd} AND LOC_CD = #{locCd}
+    </update>
+
 </mapper>

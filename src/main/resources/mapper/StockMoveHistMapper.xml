@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wms.mini.mapper.StockMoveHistMapper">
+
+    <select id="selectStockMoveHistList" resultType="com.wms.mini.domain.StockMoveHist">
+        SELECT m.MOVE_NO, m.WH_CD, m.ITEM_CD, m.FROM_LOC_CD, m.TO_LOC_CD, m.MOVE_QTY,
+               i.ITEM_NM, w.WH_NM
+        FROM STOCK_MOVE_HIST m
+                 JOIN ITEM_MST i ON m.ITEM_CD = i.ITEM_CD
+                 JOIN WAREHOUSE w ON m.WH_CD = w.WH_CD
+        ORDER BY m.MOVE_NO DESC
+    </select>
+
+    <insert id="insertStockMoveHist" parameterType="com.wms.mini.domain.StockMoveHist">
+        INSERT INTO STOCK_MOVE_HIST (MOVE_NO, WH_CD, ITEM_CD, FROM_LOC_CD, TO_LOC_CD, MOVE_QTY)
+        VALUES (#{moveNo}, #{whCd}, #{itemCd}, #{fromLocCd}, #{toLocCd}, #{moveQty})
+    </insert>
+
+</mapper>
