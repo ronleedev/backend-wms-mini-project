@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wms.mini.mapper.PlanHdrMapper">
+
+    <select id="selectPlanHdrList" resultType="com.wms.mini.domain.PlanHdr">
+        SELECT p.PLAN_NO, p.WH_CD, p.SHIPPER_CD, p.PLAN_DATE, p.STATUS, w.WH_NM, s.SHIPPER_NM
+        FROM PLAN_HDR p
+                 JOIN WAREHOUSE w ON p.WH_CD = w.WH_CD
+                 JOIN SHIPPER s ON p.SHIPPER_CD = s.SHIPPER_CD
+        ORDER BY p.PLAN_NO DESC
+    </select>
+
+    <select id="selectPlanHdr" parameterType="string" resultType="com.wms.mini.domain.PlanHdr">
+        SELECT p.PLAN_NO, p.WH_CD, p.SHIPPER_CD, p.PLAN_DATE, p.STATUS, w.WH_NM, s.SHIPPER_NM
+        FROM PLAN_HDR p
+                 JOIN WAREHOUSE w ON p.WH_CD = w.WH_CD
+                 JOIN SHIPPER s ON p.SHIPPER_CD = s.SHIPPER_CD
+        WHERE p.PLAN_NO = #{planNo}
+    </select>
+
+    <insert id="insertPlanHdr" parameterType="com.wms.mini.domain.PlanHdr">
+        INSERT INTO PLAN_HDR (PLAN_NO, WH_CD, SHIPPER_CD, PLAN_DATE, STATUS)
+        VALUES (#{planNo}, #{whCd}, #{shipperCd}, #{planDate}, #{status})
+    </insert>
+
+    <update id="updatePlanHdr" parameterType="com.wms.mini.domain.PlanHdr">
+        UPDATE PLAN_HDR
+        SET WH_CD = #{whCd},
+            SHIPPER_CD = #{shipperCd},
+            PLAN_DATE = #{planDate}
+        WHERE PLAN_NO = #{planNo}
+    </update>
+
+    <delete id="deletePlanHdr" parameterType="string">
+        DELETE FROM PLAN_HDR WHERE PLAN_NO = #{planNo}
+    </delete>
+
+</mapper>

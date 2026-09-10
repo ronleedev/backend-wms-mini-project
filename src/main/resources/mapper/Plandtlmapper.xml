@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wms.mini.mapper.PlanDtlMapper">
+
+    <select id="selectPlanDtlList" parameterType="string" resultType="com.wms.mini.domain.PlanDtl">
+        SELECT d.PLAN_NO, d.ITEM_CD, d.PLAN_QTY, i.ITEM_NM
+        FROM PLAN_DTL d
+                 JOIN ITEM_MST i ON d.ITEM_CD = i.ITEM_CD
+        WHERE d.PLAN_NO = #{planNo}
+    </select>
+
+    <insert id="insertPlanDtl" parameterType="com.wms.mini.domain.PlanDtl">
+        INSERT INTO PLAN_DTL (PLAN_NO, ITEM_CD, PLAN_QTY)
+        VALUES (#{planNo}, #{itemCd}, #{planQty})
+    </insert>
+
+    <delete id="deletePlanDtlByPlanNo" parameterType="string">
+        DELETE FROM PLAN_DTL WHERE PLAN_NO = #{planNo}
+    </delete>
+
+</mapper>
