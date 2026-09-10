@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wms.mini.mapper.StockAdjHistMapper">
+
+    <select id="selectStockAdjHistList" resultType="com.wms.mini.domain.StockAdjHist">
+        SELECT a.ADJ_NO, a.WH_CD, a.ITEM_CD, a.LOC_CD, a.BEFORE_QTY, a.ADJ_QTY, a.AFTER_QTY, a.REASON,
+               i.ITEM_NM, w.WH_NM
+        FROM STOCK_ADJ_HIST a
+                 JOIN ITEM_MST i ON a.ITEM_CD = i.ITEM_CD
+                 JOIN WAREHOUSE w ON a.WH_CD = w.WH_CD
+        ORDER BY a.ADJ_NO DESC
+    </select>
+
+    <insert id="insertStockAdjHist" parameterType="com.wms.mini.domain.StockAdjHist">
+        INSERT INTO STOCK_ADJ_HIST (ADJ_NO, WH_CD, ITEM_CD, LOC_CD, BEFORE_QTY, ADJ_QTY, AFTER_QTY, REASON)
+        VALUES (#{adjNo}, #{whCd}, #{itemCd}, #{locCd}, #{beforeQty}, #{adjQty}, #{afterQty}, #{reason})
+    </insert>
+
+</mapper>
