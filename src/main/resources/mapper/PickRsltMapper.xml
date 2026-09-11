@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wms.mini.mapper.PickRsltMapper">
+
+    <select id="selectPickRsltListByPickListNo" parameterType="string" resultType="com.wms.mini.domain.PickRslt">
+        SELECT r.PICK_RSLT_NO, r.PICK_LIST_NO, r.ALLOC_NO, r.PICK_QTY,
+               a.ITEM_CD, a.LOC_CD, a.ALLOC_QTY, i.ITEM_NM
+        FROM PICK_RSLT r
+                 JOIN SHIP_ALLOC a ON r.ALLOC_NO = a.ALLOC_NO
+                 JOIN ITEM_MST i ON a.ITEM_CD = i.ITEM_CD
+        WHERE r.PICK_LIST_NO = #{pickListNo}
+    </select>
+
+    <insert id="insertPickRslt" parameterType="com.wms.mini.domain.PickRslt">
+        INSERT INTO PICK_RSLT (PICK_RSLT_NO, PICK_LIST_NO, ALLOC_NO, PICK_QTY)
+        VALUES (#{pickRsltNo}, #{pickListNo}, #{allocNo}, #{pickQty})
+    </insert>
+
+</mapper>
