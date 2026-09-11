@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wms.mini.mapper.ShipHdrMapper">
+
+    <select id="selectShipHdrList" resultType="com.wms.mini.domain.ShipHdr">
+        SELECT s.SHIP_NO, s.WH_CD, s.SHIPPER_CD, s.SHIP_DATE, s.STATUS, w.WH_NM, sh.SHIPPER_NM
+        FROM SHIP_HDR s
+                 JOIN WAREHOUSE w ON s.WH_CD = w.WH_CD
+                 JOIN SHIPPER sh ON s.SHIPPER_CD = sh.SHIPPER_CD
+        ORDER BY s.SHIP_NO DESC
+    </select>
+
+    <select id="selectShipHdr" parameterType="string" resultType="com.wms.mini.domain.ShipHdr">
+        SELECT s.SHIP_NO, s.WH_CD, s.SHIPPER_CD, s.SHIP_DATE, s.STATUS, w.WH_NM, sh.SHIPPER_NM
+        FROM SHIP_HDR s
+                 JOIN WAREHOUSE w ON s.WH_CD = w.WH_CD
+                 JOIN SHIPPER sh ON s.SHIPPER_CD = sh.SHIPPER_CD
+        WHERE s.SHIP_NO = #{shipNo}
+    </select>
+
+    <insert id="insertShipHdr" parameterType="com.wms.mini.domain.ShipHdr">
+        INSERT INTO SHIP_HDR (SHIP_NO, WH_CD, SHIPPER_CD, SHIP_DATE, STATUS)
+        VALUES (#{shipNo}, #{whCd}, #{shipperCd}, #{shipDate}, #{status})
+    </insert>
+
+    <update id="updateShipHdr" parameterType="com.wms.mini.domain.ShipHdr">
+        UPDATE SHIP_HDR
+        SET WH_CD = #{whCd},
+            SHIPPER_CD = #{shipperCd},
+            SHIP_DATE = #{shipDate}
+        WHERE SHIP_NO = #{shipNo}
+    </update>
+
+    <update id="updateShipHdrStatus" parameterType="com.wms.mini.domain.ShipHdr">
+        UPDATE SHIP_HDR
+        SET STATUS = #{status}
+        WHERE SHIP_NO = #{shipNo}
+    </update>
+
+    <delete id="deleteShipHdr" parameterType="string">
+        DELETE FROM SHIP_HDR WHERE SHIP_NO = #{shipNo}
+    </delete>
+
+</mapper>
