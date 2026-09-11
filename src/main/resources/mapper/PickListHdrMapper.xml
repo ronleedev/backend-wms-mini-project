@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wms.mini.mapper.PickListHdrMapper">
+
+    <select id="selectPickListHdrList" resultType="com.wms.mini.domain.PickListHdr">
+        SELECT p.PICK_LIST_NO, p.SHIP_NO, p.WORKER_NM, p.STATUS, w.WH_NM, sh.SHIPPER_NM
+        FROM PICK_LIST_HDR p
+                 JOIN SHIP_HDR s ON p.SHIP_NO = s.SHIP_NO
+                 JOIN WAREHOUSE w ON s.WH_CD = w.WH_CD
+                 JOIN SHIPPER sh ON s.SHIPPER_CD = sh.SHIPPER_CD
+        ORDER BY p.PICK_LIST_NO DESC
+    </select>
+
+    <select id="selectPickListHdr" parameterType="string" resultType="com.wms.mini.domain.PickListHdr">
+        SELECT p.PICK_LIST_NO, p.SHIP_NO, p.WORKER_NM, p.STATUS, w.WH_NM, sh.SHIPPER_NM
+        FROM PICK_LIST_HDR p
+                 JOIN SHIP_HDR s ON p.SHIP_NO = s.SHIP_NO
+                 JOIN WAREHOUSE w ON s.WH_CD = w.WH_CD
+                 JOIN SHIPPER sh ON s.SHIPPER_CD = sh.SHIPPER_CD
+        WHERE p.PICK_LIST_NO = #{pickListNo}
+    </select>
+
+    <insert id="insertPickListHdr" parameterType="com.wms.mini.domain.PickListHdr">
+        INSERT INTO PICK_LIST_HDR (PICK_LIST_NO, SHIP_NO, WORKER_NM, STATUS)
+        VALUES (#{pickListNo}, #{shipNo}, #{workerNm}, #{status})
+    </insert>
+
+    <update id="updatePickListHdrStatus" parameterType="com.wms.mini.domain.PickListHdr">
+        UPDATE PICK_LIST_HDR
+        SET STATUS = #{status}
+        WHERE PICK_LIST_NO = #{pickListNo}
+    </update>
+
+</mapper>
