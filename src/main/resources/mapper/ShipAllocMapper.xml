@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wms.mini.mapper.ShipAllocMapper">
+
+    <select id="selectShipAllocListByShipNo" parameterType="string" resultType="com.wms.mini.domain.ShipAlloc">
+        SELECT a.ALLOC_NO
+             , a.SHIP_NO
+             , a.ITEM_CD
+             , a.LOC_CD
+             , a.ALLOC_QTY
+             , i.ITEM_NM
+          FROM SHIP_ALLOC a
+          JOIN ITEM_MST i
+            ON a.ITEM_CD = i.ITEM_CD
+         WHERE a.SHIP_NO = #{shipNo}
+         ORDER BY a.ALLOC_NO
+    </select>
+
+    <insert id="insertShipAlloc" parameterType="com.wms.mini.domain.ShipAlloc">
+        INSERT INTO SHIP_ALLOC ( ALLOC_NO
+                               , SHIP_NO
+                               , ITEM_CD
+                               , LOC_CD
+                               , ALLOC_QTY
+                               )
+        VALUES ( #{allocNo}
+               , #{shipNo}
+               , #{itemCd}
+               , #{locCd}
+               , #{allocQty}
+               )
+    </insert>
+
+</mapper>
