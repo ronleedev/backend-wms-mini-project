@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wms.mini.mapper.InspectRsltMapper">
+
+    <select id="selectInspectRsltListByPickListNo" parameterType="string" resultType="com.wms.mini.domain.InspectRslt">
+        SELECT ir.INSPECT_NO
+             , ir.PICK_RSLT_NO
+             , ir.INSPECT_QTY
+             , ir.INSPECT_RESULT
+             , a.ITEM_CD
+             , a.LOC_CD
+             , i.ITEM_NM
+             , pr.PICK_QTY
+          FROM INSPECT_RSLT ir
+          JOIN PICK_RSLT pr ON ir.PICK_RSLT_NO = pr.PICK_RSLT_NO
+          JOIN SHIP_ALLOC a ON pr.ALLOC_NO = a.ALLOC_NO
+          JOIN ITEM_MST i ON a.ITEM_CD = i.ITEM_CD
+         WHERE pr.PICK_LIST_NO = #{pickListNo}
+    </select>
+
+    <insert id="insertInspectRslt" parameterType="com.wms.mini.domain.InspectRslt">
+        INSERT INTO INSPECT_RSLT (INSPECT_NO, PICK_RSLT_NO, INSPECT_QTY, INSPECT_RESULT)
+        VALUES (#{inspectNo}, #{pickRsltNo}, #{inspectQty}, #{inspectResult})
+    </insert>
+
+</mapper>
